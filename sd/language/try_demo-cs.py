@@ -69,15 +69,18 @@ CATEGORY_ITEMS_DICT = {
     "vision": (33, 3, 174, 30, 41, 8, '视觉', "/sd/preset/images/icon_vision.jpg"),
     #"ml": (33, 3, 174, 30, 41, 10, '人工智能', "/sd/preset/images/icon_ml.jpg"),
     #"audiovideo": (33, 3, 174, 30, 41, 8, '多媒体', "/sd/preset/images/icon_av.jpg"),
-    "voice": (33, 3, 174, 30, 41, 8, 'VOICE', "/sd/preset/images/icon_av.jpg")
+    "voice": (33, 3, 174, 30, 41, 8, '声音', "/sd/preset/images/icon_av.jpg"),
+    "movement": (33, 3, 174, 30, 41, 8, '运动学', "/sd/preset/images/icon_av.jpg")
 }
 
 MENU_LANGUAGE = "cs"
 MENU_ITEM_PARENT_PATH = "/sd/preset/demos/"+MENU_LANGUAGE+"/"
 
 MENU_ITEMS = [
+    # movement
+    ("表演模式", CATEGORY_ITEMS_DICT["movement"], MENU_ITEM_PARENT_PATH + "demo_dog_show" + ".py"),
+    ("示教模式", CATEGORY_ITEMS_DICT["movement"], MENU_ITEM_PARENT_PATH + "demo_vision_show" + ".py"),
     # Machine Vision
-    ("表演模式", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_dog_show" + ".py"),
     ("人脸检测", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_dog_face_detection" + ".py"),
     ("人脸识别", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_dog_facial_recognition" + ".py"),
     ("人脸跟随", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_dog_face_tracking" + ".py"),
@@ -95,6 +98,7 @@ MENU_ITEMS = [
     ("自动学习并寻找颜色", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_learn_track_color" + ".py"),
     ("色块追踪", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_vision_square_track" + ".py"),
     ("寻找二维码并解码", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_vision_decode_QR" + ".py"),
+    #("读取关节", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_vision_show" + ".py"),
     # voice
     ("普通话识别", CATEGORY_ITEMS_DICT["voice"], MENU_ITEM_PARENT_PATH + "demo_dog_mandarin_recognition" + ".py"),
     ("音频分析", CATEGORY_ITEMS_DICT["voice"], MENU_ITEM_PARENT_PATH + "demo_dog_sound_spectrum_analyze" + ".py"),

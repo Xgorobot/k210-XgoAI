@@ -1,6 +1,8 @@
+
 from fpioa_manager import *
 import os, Maix, lcd, image, sensor, gc, time, sys
 from Maix import FPIOA, GPIO
+import machine
 
 try:
     from cocorobo import firmware_info
@@ -128,21 +130,28 @@ def main_program():
                 lcd.display(splash, oft=(0,0))
                 time.sleep(1)
                 exec(open("user_latest_code.py").read())
+                import machine
+                machine.reset()
             except BaseException as e:
                 try:
                     splash.draw_rectangle(btn_col[0], btn_row-46,220,40, color=splash_theme_color, fill=True, thickness=1)
                     if "ENOENT" in str(e):
+                        # "Code not found."
                         lcd_draw_string(splash, btn_col[0], btn_row-25, splash_text[5], font_size=1, color=(255,0,0), background_color=splash_theme_color)
-                    else:
+                    elif "invalid syntax" in str(e):
+                        # "Error: invalid syntax."
                         lcd_draw_string(splash, btn_col[0], btn_row-25, splash_text[6], font_size=1, color=(255,0,0), background_color=splash_theme_color)
-                        splash.draw_string(btn_col[0], 30, str(e), color=(255,0,0), scale=1.332, mono_space=False)
+                        # splash.draw_string(btn_col[0], 30, str(e), color=(255,0,0), scale=1.332, mono_space=False)
+                    else:
+                        lcd_draw_string(splash, btn_col[0], btn_row-25, str(e), font_size=1, color=(255,0,0), background_color=splash_theme_color)
+                        print(e)
                     lcd.display(splash, oft=(0,0))
                     print(str(e))
                     time.sleep_ms(2000)
 
-                    splash.draw_rectangle(btn_col[0], 30,210, 12, color=splash_theme_color, fill=True, thickness=1)
+                    # splash.draw_rectangle(btn_col[0], 30, 210, 20, color=splash_theme_color, fill=True, thickness=1)
                     # splash.draw_rectangle(btn_col[0], btn_row-22,210, 12, color=splash_theme_color, fill=True, thickness=1)
-                    splash.draw_rectangle(btn_col[0], btn_row-46,220,40, color=splash_theme_color, fill=True, thickness=1)
+                    splash.draw_rectangle(btn_col[0], btn_row-46,240,40, color=splash_theme_color, fill=True, thickness=1)
                     #splash.draw_string(btn_col[0], btn_row-22, "Left key to Move, Right key to Choose:", color=txt_selected, scale=1.332, mono_space=False)
                     lcd_draw_string(splash, btn_col[0], btn_row-45, splash_text[2], font_size=1, color=txt_unselected, background_color=splash_theme_color)
                     lcd_draw_string(splash, btn_col[0], btn_row-25, splash_text[3], font_size=1, color=txt_unselected, background_color=splash_theme_color)
@@ -159,7 +168,7 @@ def main_program():
                 lcd.display(splash, oft=(0,0))
                 time.sleep(1)
                 # __import__("try_demo")
-                exec(open("/sd/language/try_demo-en.py").read())
+                exec(open("/sd/language/try_demo-cs.py").read())
             except BaseException as e:
                 print(str(e))
                 splash.draw_rectangle(btn_col[0], btn_row-46,220,40, color=splash_theme_color, fill=True, thickness=1)
@@ -196,25 +205,37 @@ if key_gpio_left.value() == 1 and key_gpio_right.value() == 0:
 else:
     try:
         import machine, time
-        check_if_load_last_code_directly = _GET_LIST_FROM_FILE("/sd/config.cfg", '\\r\\n')[0].strip("\\n").split("=")[1].split(" ")[1]
+
+        is_config_there = False
 
         try:
-            if check_if_load_last_code_directly == '1':
-                exec(open("user_latest_code.py").read())
-            elif check_if_load_last_code_directly == '0':
-                pass
-        except Exception as e:
-            lcd.clear(lcd.BLACK)
-            lcd.draw_string(10,10, "Error: " +str(e), lcd.WHITE, lcd.BLACK)
-            print("Error: ", e)
-            time.sleep(2)
-            machine.reset()
+            f = open("/sd/config.cfg", "r")
+            is_config_there = True
+        except: pass
+
+        if is_config_there == True:
+            check_if_load_last_code_directly = _GET_LIST_FROM_FILE("/sd/config.cfg", '\r\n')[0].strip("\n").split("=")[1].split(" ")[1]
+
+            try:
+                if check_if_load_last_code_directly == '1':
+                    exec(open("user_latest_code.py").read())
+                elif check_if_load_last_code_directly == '0':
+                    pass
+            except Exception as e:
+                lcd.clear(lcd.BLACK)
+                lcd.draw_string(10,10, "Config.cfg Error: " +str(e), lcd.WHITE, lcd.BLACK)
+                # print("Proccess config.cfg Error: ", e)
+                time.sleep(2)
+                machine.reset()
+
     except Exception as e:
         print("Error: ", e)
         pass
 
-    with open("board_type.cfg", "w") as f:
-        f.write("ai")
+    if "board_type.cfg" not in os.listdir("/sd"):
+        with open("board_type.cfg", "w") as f:
+            f.write("ai")
+
     btn_selected = (255,255,255)
     btn_unselected = (76,86,127)
     txt_selected = (255,255,255)
@@ -255,7 +276,7 @@ else:
         "按下C键进行选择",
         "正在打开上次上传的程序...",
         "无法找到该程序",
-        "程序包含错误",
+        "程序语法错误",
         "正在打开样例菜单...",
         "无法找到样例菜单文件"
     )
