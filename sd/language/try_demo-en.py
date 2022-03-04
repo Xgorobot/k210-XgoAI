@@ -65,6 +65,7 @@ splash.draw_rectangle(0,0,240,240,color=color_splash_theme,fill=True)
 
 CATEGORY_ITEMS_DICT = {
     "null": (33, 3, 174, 30, 41, 8, '', "/sd/preset/images/icon_basics.jpg"),
+    "move": (33, 3, 174, 30, 41, 8, 'MOVE', "/sd/preset/images/icon_ml.jpg"),
     #"basics": (33, 3, 174, 30, 41, 8, 'BASICS', "/sd/preset/images/icon_basics.jpg"),
     "vision": (33, 3, 174, 30, 41, 8, 'VISION', "/sd/preset/images/icon_vision.jpg"),
     #"ml": (33, 3, 174, 30, 41, 10, 'A.I.', "/sd/preset/images/icon_ml.jpg"),
@@ -76,8 +77,10 @@ MENU_LANGUAGE = "en"
 MENU_ITEM_PARENT_PATH = "/sd/preset/demos/"+MENU_LANGUAGE+"/"
 
 MENU_ITEMS = [
+    # movement
+    ("Dog Show", CATEGORY_ITEMS_DICT["move"], MENU_ITEM_PARENT_PATH + "demo_dog_show" + ".py"),
+    ("Get Angle", CATEGORY_ITEMS_DICT["move"], MENU_ITEM_PARENT_PATH + "demo_vision_show" + ".py"),
     # Machine Vision
-    ("Dog Show", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_dog_show" + ".py"),
     ("Face Detection", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_dog_face_detection" + ".py"),
     ("Facial Recognition", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_dog_facial_recognition" + ".py"),
     ("Face Tracking", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_dog_face_tracking" + ".py"),
