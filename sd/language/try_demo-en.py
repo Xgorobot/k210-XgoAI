@@ -99,8 +99,8 @@ MENU_ITEMS = [
     ("Track Square", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_vision_square_track" + ".py"),
     ("Find QR Code and Decode", CATEGORY_ITEMS_DICT["vision"], MENU_ITEM_PARENT_PATH + "demo_vision_decode_QR" + ".py"),
     #voice
-    ("Speech Recording", CATEGORY_ITEMS_DICT["voice"], MENU_ITEM_PARENT_PATH + "demo_dog_speech_recording" + ".py"),
-    ("Speech Recognition", CATEGORY_ITEMS_DICT["voice"], MENU_ITEM_PARENT_PATH + "demo_dog_speech_recognition" + ".py"),
+    #("Speech Recording", CATEGORY_ITEMS_DICT["voice"], MENU_ITEM_PARENT_PATH + "demo_dog_speech_recording" + ".py"),
+    #("Speech Recognition", CATEGORY_ITEMS_DICT["voice"], MENU_ITEM_PARENT_PATH + "demo_dog_speech_recognition" + ".py"),
     ("Sound Spectrum Analyze", CATEGORY_ITEMS_DICT["voice"], MENU_ITEM_PARENT_PATH + "demo_dog_sound_spectrum_analyze" + ".py"),
 ]
 
